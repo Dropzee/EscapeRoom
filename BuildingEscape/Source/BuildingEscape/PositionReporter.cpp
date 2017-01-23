@@ -20,7 +20,8 @@ void UPositionReporter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UE_LOG(LogTemp, Warning, TEXT("Position Report on Chair!\n"))
+	FString name = GetOwner()->GetName();
+	UE_LOG(LogTemp, Warning, TEXT("Position Report on %s"), *name);
 	
 }
 
