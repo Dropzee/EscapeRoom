@@ -24,5 +24,7 @@ public:
 private:
 
 	float reach = 100.f;
+
+	UPhysicsHandleComponent* handle = nullptr;
 	
 };
