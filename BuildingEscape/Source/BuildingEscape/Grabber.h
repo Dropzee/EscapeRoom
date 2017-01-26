@@ -32,4 +32,6 @@ private:
 	void Grab();
 
 	void Release();
+
+	const FHitResult checkHit();
 };

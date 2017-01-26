@@ -20,7 +20,6 @@ void UGrabber::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//
 
 	handle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 	if (!handle) {
@@ -38,27 +37,23 @@ void UGrabber::BeginPlay()
 }
 
 void UGrabber::Grab() {
-	UE_LOG(LogTemp, Warning, TEXT("Grab Pressed!"));
+	checkHit();
 }
 
 void UGrabber::Release() {
-	UE_LOG(LogTemp, Warning, TEXT("Grab Released!"));
 }
 
-
-// Called every frame
-void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
+const FHitResult UGrabber::checkHit()
 {
-	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
 
 	FVector pos;
 	FRotator rot;
 
-	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(pos,rot);
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(pos, rot);
 
 
 	FVector traceEnd = pos + rot.Vector() * reach;
-	DrawDebugLine(GetWorld(), pos, traceEnd, FColor(255, 0, 0), false, 0.f, 0.f, 10.f);
+	//DrawDebugLine(GetWorld(), pos, traceEnd, FColor(255, 0, 0), false, 0.f, 0.f, 10.f);
 
 	FHitResult traceHit;
 	FCollisionQueryParams params(FName(TEXT("")), false, GetOwner());
@@ -68,6 +63,15 @@ void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompon
 	if (actorHit) {
 		UE_LOG(LogTemp, Warning, TEXT("Trace hit - %s"), *(actorHit->GetName()))
 	}
+
+	return traceHit;
+}
+
+
+// Called every frame
+void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
+{
+	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
 
 }
 
