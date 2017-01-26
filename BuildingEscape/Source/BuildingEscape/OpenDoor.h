@@ -35,8 +35,6 @@ private:
 
 	float lastOpenTime;
 
-	AActor* actorPawn;
-
 	AActor* owner;
 	
 };
