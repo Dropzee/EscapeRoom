@@ -26,5 +26,8 @@ private:
 	float reach = 100.f;
 
 	UPhysicsHandleComponent* handle = nullptr;
+
+	UInputComponent* input = nullptr;
 	
+	void Grab();
 };
