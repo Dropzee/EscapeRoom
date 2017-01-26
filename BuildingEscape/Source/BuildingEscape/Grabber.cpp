@@ -37,10 +37,16 @@ void UGrabber::BeginPlay()
 }
 
 void UGrabber::Grab() {
-	checkHit();
+	auto result = checkHit();
+	auto grabTarget = result.GetComponent();
+	auto hit = result.GetActor();
+	if (hit) {
+		handle->GrabComponent(grabTarget, NAME_None, grabTarget->GetOwner()->GetActorLocation(), true);
+	}
 }
 
 void UGrabber::Release() {
+	handle->ReleaseComponent();
 }
 
 const FHitResult UGrabber::checkHit()
@@ -72,6 +78,20 @@ const FHitResult UGrabber::checkHit()
 void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
+
+	FVector pos;
+	FRotator rot;
+
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(pos, rot);
+
+	FVector traceEnd = pos + rot.Vector() * reach;
+	//DrawDebugLine(GetWorld(), pos, traceEnd, FColor(255, 0, 0), false, 0.f, 0.f, 10.f);
+
+	if (handle->GrabbedComponent) {
+		handle->SetTargetLocation(traceEnd);
+	}
+
+	
 
 }
 
