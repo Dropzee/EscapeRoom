@@ -30,4 +30,6 @@ private:
 	UInputComponent* input = nullptr;
 	
 	void Grab();
+
+	void Release();
 };
